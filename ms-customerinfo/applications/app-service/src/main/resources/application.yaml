@@ -1,0 +1,58 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "ms-customerinfo"
+  devtools:
+    add-properties: false
+  profiles:
+    include: null
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/financial-service"
+    username: "postgres"
+    password: "1234"
+    driverClassName: "org.postgresql.Driver"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate.dialect: "org.hibernate.dialect.PostgreSQLDialect"
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  kafka:
+    consumer:
+      bootstrap-servers:
+        - localhost:9092
+      group-id: "ms-customerinfo"
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers:
+        - localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
+
+#api:
+#  datasource:
+#    url: "jdbc:postgresql://localhost:5432/financial-service"
+#    username: "postgres"
+#    password: "1234"
+api:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}

@@ -1,0 +1,24 @@
+buildscript {
+	ext {
+		springBootVersion = '3.3.0'
+		sonarVersion = '5.0.0.4638'
+        lombokVersion = '1.18.32'
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}" apply false
+	id 'org.sonarqube' version "${sonarVersion}"
+	id 'jacoco'
+}
+
+//jar {
+//    manifest {
+//        attributes(
+//                'Main-Class': 'com.co.financialservice'
+//        )
+//    }
+//}
+
+
+apply from: './main.gradle'
